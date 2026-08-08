@@ -78,6 +78,19 @@ def get_note(note_id:int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404,detail="I cannot find your note")
 
 # update by id
-#@app.put("/notes/{note_id}",response_model=NoteResponse)
-#def update_note(note_id:int, db: Session = Depends(get_db)):
+@app.put("/notes/{note_id}",response_model=NoteResponse)
+def update_note(note_id:int, note:NoteCreate, db: Session = Depends(get_db)):
+    note_db = db.query(Note).filter(Note.id == note_id).first()
+
+    if note_db:
+        for field, value in note.model_dump().items():
+            setattr(note_db, field, value)
+
+        db.commit()
+        db.refresh(note_db)
+        return note_db
+    else:
+        raise HTTPException(status_code=404, detail="I cannot find your note")
+
+# delete by id
 
