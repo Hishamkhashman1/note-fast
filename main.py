@@ -78,6 +78,6 @@ def get_note(note_id:int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404,detail="I cannot find your note")
 
 # update by id
-@app.put("/notes/{note_id}",response_model=NoteResponse)
-def update_note(note_id:int, db: Session = Depends(get_db)):
+#@app.put("/notes/{note_id}",response_model=NoteResponse)
+#def update_note(note_id:int, db: Session = Depends(get_db)):
 
