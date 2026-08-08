@@ -22,4 +22,30 @@ class Notes(Base):
     title = Column(String)
     message = Column(String, nullable=False)
 
-    Base.metadata.create.all(engine)
+Base.metadata.create.all(engine)
+
+#pydantic models (data class models)
+class NoteCreate(BaseModel):
+    id: int
+    title:str
+    message:str
+
+class NoteResponse(BaseModel):
+    id:int
+    title:str
+    message:str
+
+    class Config:
+        from_attribute = True
+
+#db def for later DI
+def get_db():
+    db = SessionLocal()
+
+    try:
+        yield db
+    finally:
+        db.close()
+
+#endpoints go here 
+
