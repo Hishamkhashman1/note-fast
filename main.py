@@ -22,7 +22,7 @@ class Note(Base):
     title = Column(String)
     message = Column(String, nullable=False)
 
-Base.metadata.create.all(engine)
+Base.metadata.create_all(engine)
 
 #pydantic models (data class models)
 class NoteCreate(BaseModel):
@@ -56,10 +56,16 @@ def get_root():
 @app.post("/notes/",response_model=NoteResponse)
 def create_note(note:NoteCreate,db:Session=Depends(get_db)):
     new_note = Note(**note.model_dump())
-    db.add =(new_note)
+    db.add(new_note)
     db.commit()
     db.refresh(new_note)
     return new_note
+
+#get all
+@app.get("/notes/",response_model=list[NoteResponse])
+def get_all_notes(db: Session = Depends(get_db)):
+    notes = db.query(Note).all()
+    return notes
 
 
 
