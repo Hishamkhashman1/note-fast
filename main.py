@@ -36,7 +36,7 @@ class NoteResponse(BaseModel):
     message:str
 
     class Config:
-        from_attribute = True
+        from_attributes = True
 
 #db def for later DI
 def get_db():
@@ -47,5 +47,10 @@ def get_db():
     finally:
         db.close()
 
-#endpoints go here 
+#endpoints go here think CRUD
+
+@app.get("/")
+def get_root():
+    return {"message":"welcome to the notes API"}
+
 
