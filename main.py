@@ -66,7 +66,16 @@ def create_note(note:NoteCreate,db:Session=Depends(get_db)):
 def get_all_notes(db: Session = Depends(get_db)):
     notes = db.query(Note).all()
     return notes
+
 # get one note by id
+@app.get("/notes/{note_id}",response_model=NoteResponse)
+def get_note(note_id:int, db: Session = Depends(get_db)):
+    note_db = db.query(Note).filter(Note.id == note_id).first()
+
+    if note_db:
+        return note_db
+    else:
+        raise HTTPException(status_code=404,detail="I cannot find your note")
 
 
 
