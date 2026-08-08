@@ -6,6 +6,10 @@ This a simple REST API python FastAPI CRUD app with ORM sqlalchemy ..
 
 all manually coded ..
 
-will possibly have an LLM integration at a later stage
+will include unit tests and integration tests using pytest framework
+
+will possibly have an LLM integration at a later stage..  still under consderation
+
+may think about a very simple fronend.. 
 
 This Readme is for initial commit only 
