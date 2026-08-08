@@ -66,6 +66,8 @@ def create_note(note:NoteCreate,db:Session=Depends(get_db)):
 def get_all_notes(db: Session = Depends(get_db)):
     notes = db.query(Note).all()
     return notes
+# get one note by id
+
 
 
 
