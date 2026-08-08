@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends
-from sqlalchemy import Column, Table, Integer, String, create_engine #add more as needed
+from sqlalchemy import Column, Integer, String, create_engine #add more as needed
 from sqlalchemy.orm import declarative_base, Session, sessionmaker
 
 from pydantic import BaseModel
@@ -15,7 +15,7 @@ SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
 #Db models
-class Notes(Base):
+class Note(Base):
     __tablename__ = "notes"
 
     id = Column(Integer, primary_key=True, index= True)
@@ -52,5 +52,14 @@ def get_db():
 @app.get("/")
 def get_root():
     return {"message":"welcome to the notes API"}
+
+@app.post("/notes/",response_model=NoteResponse)
+def create_note(note:NoteCreate,db:Session=Depends(get_db)):
+    new_note = Note(**note.model_dump())
+    db.add =(new_note)
+    db.commit()
+    db.refresh(new_note)
+    return new_note
+
 
 
