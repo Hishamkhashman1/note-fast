@@ -81,14 +81,18 @@ def get_note(note_id:int, db: Session = Depends(get_db)):
 
 # update by id
 @app.put("/notes/{note_id}",response_model=NoteResponse)
-def update_note(note_id:int, db: Session = Depends(get_db)):
+def update_note(note_id:int, note:NoteCreate, db: Session = Depends(get_db)):
     note_db = db.query(Note).filter(Note.id == note_id).first()
 
     if not note_db:
         raise HTTPException(status_code=404, detail="Sorry  I cannot find what you are looking for")
     
-    for field, value in note_db.model_dump().items():
-        setattr(field, value, note_db)
+    for field, value in note.model_dump().items():
+        setattr(note_db, field, value)
+
+    db.commit()
+    db.refresh(note_db)
+    return note_db
 
 
 
