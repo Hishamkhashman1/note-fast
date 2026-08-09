@@ -78,8 +78,30 @@ def get_note(note_id:int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404,detail="I cannot find your note")
 
 # update by id
-#@app.put("/notes/{note_id}",response_model=NoteResponse)
-#def update_note(note_id:int, db: Session = Depends(get_db)):
+@app.put("/notes/{note_id}",response_model=NoteResponse)
+def update_note(note_id:int, db: Session = Depends(get_db)):
+    note_db = db.query(Note).filter(Note.id == note_id).first()
+
+    if not note_db:
+        raise HTTPException(status_code=404, detail="Sorry  I cannot find what you are looking for")
+    
+    for field, value in note_db:
+        setattr(field, value, note_db)
+
+
 
 # delete by id
+@app.delete("/notest/{note_id}")
+def note_delete(note_id:int,db: Session=Depends(get_db)):
+    note_db = db.query(Note).filter(Note.id == note_id).first()
+
+    if note_db:
+        db.delete(note_db)
+        db.commit()
+        db.refresh(note_db)
+        return {"message": "successfuly deleted note"}
+
+    else:
+        raise HTTPException(status_code=404, detail="Sorry I dont seem to find what you are looking for")
+
 
