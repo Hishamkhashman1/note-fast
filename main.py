@@ -87,7 +87,7 @@ def update_note(note_id:int, db: Session = Depends(get_db)):
     if not note_db:
         raise HTTPException(status_code=404, detail="Sorry  I cannot find what you are looking for")
     
-    for field, value in note_db:
+    for field, value in note_db.model_dump().items():
         setattr(field, value, note_db)
 
 
