@@ -4,6 +4,8 @@ from sqlalchemy.orm import declarative_base, Session, sessionmaker
 
 from pydantic import BaseModel
 
+from fasthtml.common import FastHTML, Div, P, H1
+
 #app setup
 app = FastAPI(title="get your notes now")
 
@@ -98,7 +100,6 @@ def note_delete(note_id:int,db: Session=Depends(get_db)):
     if note_db:
         db.delete(note_db)
         db.commit()
-        db.refresh(note_db)
         return {"message": "successfuly deleted note"}
 
     else:
