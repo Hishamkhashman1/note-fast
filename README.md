@@ -1,12 +1,12 @@
-Hello!
+Hello!こんにちは
 
 note fast is an app where you can create notes , get notes, update notes, delete notes, etc .. 
 
-This a simple REST API python FastAPI CRUD app with ORM sqlalchemy ..
+REST API python FastAPI CRUD app with ORM sqlalchemy ..
 
-all manually coded ..
+all manually coded by hishamkhashman1
 
-will include unit tests and integration tests using pytest framework
+includes unit tests and integration tests using pytest framework
 
 will possibly have an LLM integration at a later stage..  still under consderation
 
